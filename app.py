@@ -1,5 +1,5 @@
 import pandas as pd
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory # ADDED send_from_directory
 import joblib # For loading the saved model
 from flask_cors import CORS # For handling Cross-Origin Resource Sharing
 import os # For path operations
@@ -32,13 +32,17 @@ except Exception as e:
 
 # --- API Routes ---
 
-@app.route('/')
-def home():
+@app.route('/') # NEW ROUTE to serve the frontend HTML
+def serve_index():
     """
-    A simple home route to confirm the API server is running.
-    Access this by navigating to http://localhost:5000/ in your browser.
+    Serves the index.html file from the root directory when the base URL is accessed.
     """
-    return "House Price Prediction API is running!"
+    return send_from_directory('.', 'index.html')
+
+# The old 'home' route is removed as it's replaced by serve_index()
+# @app.route('/')
+# def home():
+#     return "House Price Prediction API is running!"
 
 @app.route('/predict', methods=['POST'])
 def predict():
