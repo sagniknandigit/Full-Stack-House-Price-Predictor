@@ -98,11 +98,9 @@ def predict():
 
 # --- Run the Flask Application ---
 
+
 if __name__ == '__main__':
-    # app.run() starts the Flask development server.
-    # host='0.0.0.0': Makes the server accessible from any IP address on your network.
-    #                Useful for testing from other devices or in Docker/cloud environments.
-    # port=5000: The port number the server will listen on.
-    # debug=True: Enables Flask's debugger and auto-reloader.
-    #             IMPORTANT: Set to False in a production environment for security and performance.
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    # Hugging Face Spaces sets the PORT environment variable
+    # Default to 7860 if not set (common for Gradio SDK)
+    port = int(os.environ.get("PORT", 7860))
+    app.run(host='0.0.0.0', port=port, debug=False) # Set debug to False
